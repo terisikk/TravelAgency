@@ -11,4 +11,4 @@ RUN apt-get update -qq && apt-get install -y -qq \
 RUN mkdir -p /TravelAgency
 WORKDIR /TravelAgency
 
-CMD cmake -S . -build build && cmake --build build
+CMD cmake -S . -B build && cmake --build build
