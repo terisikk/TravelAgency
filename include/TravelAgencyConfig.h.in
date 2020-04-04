@@ -1,7 +1,7 @@
-#ifndef TRAVEL_AGENCY_CONFIG_H
-#define TRAVEL_AGENCY_CONFIG_H
+#ifndef TRAVELAGENCYCONFIG_H
+#define TRAVELAGENCYCONFIG_H
 
-#define TravelAgency_VERSION_MAJOR @TravelAgency_VERSION_MAJOR@
-#define TravelAgency_VERSION_MINOR @TravelAgency_VERSION_MINOR@
+constexpr unsigned int TravelAgency_VERSION_MAJOR = @TravelAgency_VERSION_MAJOR@;
+constexpr unsigned int TravelAgency_VERSION_MINOR = @TravelAgency_VERSION_MINOR@;
 
 #endif
