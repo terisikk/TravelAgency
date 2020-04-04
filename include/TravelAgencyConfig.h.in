@@ -1,0 +1,7 @@
+#ifndef TRAVEL_AGENCY_CONFIG_H
+#define TRAVEL_AGENCY_CONFIG_H
+
+#define TravelAgency_VERSION_MAJOR @TravelAgency_VERSION_MAJOR@
+#define TravelAgency_VERSION_MINOR @TravelAgency_VERSION_MINOR@
+
+#endif
