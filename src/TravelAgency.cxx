@@ -1,4 +1,3 @@
-#include <cmath>
 #include <iostream>
 #include <string>
 
@@ -13,12 +12,5 @@ auto main(int argc, char* argv[]) -> int
     return 1;
   }
 
-  // convert input to double
-  const double inputValue = std::stod(argv[1]);
-
-  // calculate square root
-  const double outputValue = sqrt(inputValue);
-  std::cout << "The square root of " << inputValue << " is " << outputValue
-            << std::endl;
   return 0;
 }

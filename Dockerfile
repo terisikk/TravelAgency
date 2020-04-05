@@ -1,11 +1,14 @@
 FROM ubuntu:20.04
 
-RUN apt-get update -qq && apt-get install -y -qq \
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
     cmake \
     clang \
     clang-tidy \
     libc++-dev \
     libc++abi-dev \
+    git \
     && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /TravelAgency
