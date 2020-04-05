@@ -9,5 +9,3 @@ Course work for Advanced Object-Oriented Programming.
 # Run after building
 
 `docker run --rm -ti -v ${PWD}:/TravelAgency $(docker build -q .) build/TravelAgency`
-
-
