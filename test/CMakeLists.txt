@@ -17,4 +17,4 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(catch)
 include(${catch_SOURCE_DIR}/contrib/Catch.cmake)
 
-package_add_test(test_data_parser data_parser_library)
+package_add_test(test_tabular_data_parser tabular_data_parser_library)
