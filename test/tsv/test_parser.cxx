@@ -1,16 +1,26 @@
 #define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
 #include <catch2/catch.hpp>
 
-#include "tabular_data_parser.hpp"
+#include "parser.hpp"
 
-SCENARIO( "Data parser can split tabular data", "[dataparser]" ) {
-    GIVEN( "Dataparser") {
+SCENARIO( "Parser can split tabular data", "[parser]" ) {
+    GIVEN( "Parser") {
         std::vector<std::string> expected;
         std::vector<std::string> actual;
 
-        WHEN( "non-tabular data is parsed") {
+        WHEN( "empty string is parsed" ) {
+            expected = {};
+            actual = Parser::parseRow("");
+
+            THEN("empty vector is returned") {
+                REQUIRE( actual.empty() );
+                REQUIRE( actual == expected );
+            }
+        }
+
+        WHEN( "non-tabular data is parsed" ) {
             expected = {"this is input"};
-            actual = TabularDataParser::parseRow("this is input");
+            actual = Parser::parseRow("this is input");
 
             THEN( "data is not split") {
                 REQUIRE( actual.size() == 1 );
@@ -18,9 +28,9 @@ SCENARIO( "Data parser can split tabular data", "[dataparser]" ) {
             }
         }
 
-        WHEN( "data with single tab is parsed") {
+        WHEN( "data with single tab is parsed" ) {
             expected = {"this", "is input"};
-            actual = TabularDataParser::parseRow("this\tis input");
+            actual = Parser::parseRow("this\tis input");
 
             THEN( "data is split to two") {
                 REQUIRE( actual.size() == 2 );
@@ -28,9 +38,9 @@ SCENARIO( "Data parser can split tabular data", "[dataparser]" ) {
             }
         }
         
-        WHEN( "data with multiple tabs is parsed") {
+        WHEN( "data with multiple tabs is parsed" ) {
             expected = {"this", "is", "input"};
-            actual = TabularDataParser::parseRow("this\tis\tinput");
+            actual = Parser::parseRow("this\tis\tinput");
 
             THEN( "data is split") {
                 REQUIRE( actual.size() == 3 );

@@ -1,11 +1,11 @@
-#ifndef TABULAR_DATA_PARSER_HPP
-#define TABULAR_DATA_PARSER_HPP
+#ifndef PARSER_HPP
+#define PARSER_HPP
 
 #include <regex>
 #include <string>
 #include <vector>
 
-class TabularDataParser
+class Parser
 {
     public:
         static const std::string ITEM_SPLIT_REGEX;

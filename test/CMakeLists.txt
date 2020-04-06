@@ -1,8 +1,8 @@
-macro(package_add_test TESTNAME LIBRARIES)
+macro(package_add_test TESTNAME LIBRARY)
     # create an exectuable in which the tests will be stored
-    add_executable(${TESTNAME} ${TESTNAME}.cxx)
+    add_executable(${TESTNAME} ${ARGN})
 
-    target_link_libraries(${TESTNAME} PRIVATE Catch2::Catch2 ${LIBRARIES})
+    target_link_libraries(${TESTNAME} PRIVATE Catch2::Catch2 ${LIBRARY})
 
     catch_discover_tests(${TESTNAME})
 endmacro()
@@ -17,4 +17,4 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(catch)
 include(${catch_SOURCE_DIR}/contrib/Catch.cmake)
 
-package_add_test(test_tabular_data_parser tabular_data_parser_library)
+package_add_test(test_tsv tsv_library tsv/test_parser.cxx tsv/test_reader.cxx)
