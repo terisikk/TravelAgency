@@ -1,9 +1,6 @@
 set(BINARY ${CMAKE_PROJECT_NAME})
 
-file(GLOB_RECURSE SOURCES LIST_DIRECTORIES true *.h *.cxx)
-set(SOURCES ${SOURCES})
+file(GLOB HEADER_LIST CONFIGURE_DEPENDS "${TravelAgency_SOURCE_DIR}/include/*.hpp")
 
-add_executable(${BINARY}_run ${SOURCES})
-
-target_include_directories(${BINARY}_run PUBLIC "${PROJECT_BINARY_DIR}")
-target_include_directories(${BINARY}_run PRIVATE "${PROJECT_BINARY_DIR}/include")
+add_library(data_parser_library data_parser.cxx ${HEADER_LIST})
+target_include_directories(data_parser_library PUBLIC ../include)
