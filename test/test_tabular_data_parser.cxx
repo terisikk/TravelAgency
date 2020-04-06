@@ -17,5 +17,25 @@ SCENARIO( "Data parser can split tabular data", "[dataparser]" ) {
                 REQUIRE( actual == expected );
             }
         }
+
+        WHEN( "data with single tab is parsed") {
+            expected = {"this", "is input"};
+            actual = TabularDataParser::parseRow("this\tis input");
+
+            THEN( "data is split to two") {
+                REQUIRE( actual.size() == 2 );
+                REQUIRE( actual == expected );
+            }
+        }
+        
+        WHEN( "data with multiple tabs is parsed") {
+            expected = {"this", "is", "input"};
+            actual = TabularDataParser::parseRow("this\tis\tinput");
+
+            THEN( "data is split") {
+                REQUIRE( actual.size() == 3 );
+                REQUIRE( actual == expected );
+            }
+        }
     }
 }
