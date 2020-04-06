@@ -2,6 +2,7 @@
 #include <string>
 
 #include "TravelAgencyConfig.h"
+#include "reader.hpp"
 
 auto main(int argc, char* argv[]) -> int
 {
