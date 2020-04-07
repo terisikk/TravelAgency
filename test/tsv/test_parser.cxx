@@ -1,7 +1,7 @@
 #define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
 #include <catch2/catch.hpp>
 
-#include "parser.hpp"
+#include "tsv/parser.hpp"
 
 SCENARIO( "Parser can split tabular data", "[parser]" ) {
     GIVEN( "Parser") {
@@ -10,7 +10,7 @@ SCENARIO( "Parser can split tabular data", "[parser]" ) {
 
         WHEN( "empty string is parsed" ) {
             expected = {};
-            actual = Parser::parseRow("");
+            actual = tsv::Parser::parseRow("");
 
             THEN("empty vector is returned") {
                 REQUIRE( actual.empty() );
@@ -20,7 +20,7 @@ SCENARIO( "Parser can split tabular data", "[parser]" ) {
 
         WHEN( "non-tabular data is parsed" ) {
             expected = {"this is input"};
-            actual = Parser::parseRow("this is input");
+            actual = tsv::Parser::parseRow("this is input");
 
             THEN( "data is not split") {
                 REQUIRE( actual.size() == 1 );
@@ -30,7 +30,7 @@ SCENARIO( "Parser can split tabular data", "[parser]" ) {
 
         WHEN( "data with single tab is parsed" ) {
             expected = {"this", "is input"};
-            actual = Parser::parseRow("this\tis input");
+            actual = tsv::Parser::parseRow("this\tis input");
 
             THEN( "data is split to two") {
                 REQUIRE( actual.size() == 2 );
@@ -40,7 +40,7 @@ SCENARIO( "Parser can split tabular data", "[parser]" ) {
         
         WHEN( "data with multiple tabs is parsed" ) {
             expected = {"this", "is", "input"};
-            actual = Parser::parseRow("this\tis\tinput");
+            actual = tsv::Parser::parseRow("this\tis\tinput");
 
             THEN( "data is split") {
                 REQUIRE( actual.size() == 3 );

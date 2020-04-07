@@ -1,4 +1,6 @@
-#include "parser.hpp"
+#include "tsv/parser.hpp"
+
+namespace tsv {
 
 const std::string Parser::ITEM_SPLIT_REGEX = "\t";
 
@@ -16,3 +18,5 @@ auto Parser::split(const std::string& input, const std::string& regex) -> std::v
 
     return {first, last};
 }
+
+} // namespace tsv
