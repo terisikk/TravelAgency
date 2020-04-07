@@ -2,7 +2,7 @@
 #include <string>
 
 #include "TravelAgencyConfig.h"
-#include "tsv/parser.hpp"
+#include "tsv/reader.hpp"
 
 auto main(int argc, char* argv[]) -> int
 {

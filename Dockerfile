@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
     libc++-dev \
     libc++abi-dev \
     git \
-    gdb \
+    lldb \
     && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /TravelAgency

@@ -2,15 +2,21 @@
 
 namespace tsv {
 
-auto Reader::readInputStream(std::istream& stream) -> std::string {
+auto Reader::readRow(std::istream& stream) -> std::vector<std::string> {
+    std::vector<std::string> items;
     std::string line;
-    std::string fullText;
+    std::string item;
 
-    while (std::getline(stream, line)) {
-        fullText += line + '\n';
+    std::getline(stream, line);
+    std::stringstream rowstream(line);
+
+
+    while(std::getline(rowstream, item, '\t'))
+    {
+        items.emplace_back(item);
     }
 
-    return fullText;
+    return items;
 }
 
 } // namespace tsv
