@@ -40,8 +40,12 @@ auto Table::select(const std::vector<std::string>& query) -> std::vector<std::ve
 
 auto Table::filterByFieldValue(const std::vector<std::string>& row, const std::string& field, const std::string& value) -> bool {
     auto it = std::find(fieldNames.begin(), fieldNames.end(), field);
-    int index = std::distance(fieldNames.begin(), it);
 
+    if (it == fieldNames.end()) {
+        return {};
+    }
+
+    int index = std::distance(fieldNames.begin(), it);
     return row.at(index) == value;
 }
 

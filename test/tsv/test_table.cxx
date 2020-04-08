@@ -50,7 +50,7 @@ SCENARIO( "Table can be created" ) {
         }
     }
 
-    GIVEN( "populated table and a query" ) {
+    GIVEN( "populated table" ) {
         const std::vector<std::string> fieldNames = {"ID", "NAME", "PHONE"};
         const std::string name = "EMPLOYEES";        
         tsv::Table table(name, fieldNames);
@@ -67,15 +67,35 @@ SCENARIO( "Table can be created" ) {
             table.insert(data); 
         }
 
-        const std::vector<std::string> query = {"ID", "2"};
-        const std::vector<std::vector<std::string>> expected = {{"2", "Dixus_2", "24690"}}; 
-
         WHEN( "data is queried by field name and value" ) {
+
+            const std::vector<std::string> query = {"ID", "2"};
+            const std::vector<std::vector<std::string>> expected = {{"2", "Dixus_2", "24690"}}; 
             const std::vector<std::vector<std::string>> result = table.select(query);
 
             THEN( "only matching rows are selected" ) {
                 REQUIRE( result == expected );
             }
-        } 
+        }
+
+        WHEN( "data is queried by nonexisting field" ) {
+            const std::vector<std::string> query = {"ADDRESS", "#STREET"};
+            const std::vector<std::vector<std::string>> expected = {}; 
+            const std::vector<std::vector<std::string>> result = table.select(query);
+
+            THEN( "empty result set is returned" ) {
+                REQUIRE ( result == expected );
+            }
+        }
+
+        WHEN( "data is queried by nonexisting value" ) {
+            const std::vector<std::string> query = {"ID", "999999"};
+            const std::vector<std::vector<std::string>> expected = {}; 
+            const std::vector<std::vector<std::string>> result = table.select(query);
+
+            THEN( "empty result set is returned" ) {
+                REQUIRE ( result == expected );
+            }
+        }
     }
 }
