@@ -1,6 +1,7 @@
 #ifndef TSV_TABLE_HPP
 #define TSV_TABLE_HPP
 
+#include <iterator>
 #include <string>
 #include <vector>
 
@@ -18,6 +19,10 @@ class Table {
         auto describe() -> std::string;
         auto insert(const std::vector<std::string>& row) -> bool;
         auto select() -> std::vector<std::vector<std::string>>;
+        auto select(const std::vector<std::string>& query) -> std::vector<std::vector<std::string>>;
+
+    private:
+        auto filterByFieldValue(const std::vector<std::string>& row, const std::string& field, const std::string& value) -> bool;
 };
 
 } // namespace tsv
