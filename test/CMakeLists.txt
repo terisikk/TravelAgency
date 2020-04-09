@@ -17,4 +17,4 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(catch)
 include(${catch_SOURCE_DIR}/contrib/Catch.cmake)
 
-package_add_test(test_tsv tsv_library tsv/test_reader.cxx tsv/test_table.cxx tsv/test_field.cxx)
+package_add_test(test_tsv tsv_library tsv/test_reader.cxx tsv/test_table.cxx tsv/test_query.cxx)
