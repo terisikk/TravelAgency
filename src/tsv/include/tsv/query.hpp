@@ -5,12 +5,14 @@
 
 namespace tsv {
 
-    template <class T, typename U>
+    template <class T>
     class Query {
 
         public:
-            explicit Query<T, U>() = default;
-            auto execute(T t, std::function<U(T&)> f, U c) -> bool { return f(t) == c; };
+            explicit Query<T>() = default;
+
+            template<typename U>
+            auto execute(U value, T instance, auto (T::* function)() -> decltype(value)) -> bool { return (instance.*function)() == value; };
     };
 } // namespace tsv
 

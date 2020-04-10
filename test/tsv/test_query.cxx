@@ -7,13 +7,14 @@
 
 class TestClass {
     public:
-        int getName() { return 10; };
+        auto getName() -> std::string { return "Test"; }; // NOLINT
+        auto getAge() -> int { return 10; }; // NOLINT
 };
 
 SCENARIO( "Queries can be created" ) {
     GIVEN( "two queries with different types" ) {
-        tsv::Query<std::string, std::string> name;
-        tsv::Query<int, int> number;
+        tsv::Query<TestClass> name;
+        tsv::Query<tsv::Query<TestClass>> number;
 
         WHEN( "query types are compared" ) {
             bool result = typeid(name) == typeid(number);
@@ -25,8 +26,8 @@ SCENARIO( "Queries can be created" ) {
     }
 
     GIVEN( "two queries with same type" ) {
-        tsv::Query<std::string, std::string> firstName;
-        tsv::Query<std::string, std::string> lastName;
+        tsv::Query<TestClass> firstName;
+        tsv::Query<TestClass> lastName;
 
         WHEN( "query types are compared" ) {
             bool result = typeid(firstName) == typeid(lastName);
@@ -38,14 +39,13 @@ SCENARIO( "Queries can be created" ) {
     }
 
     GIVEN( "Query with a method pointer") {
-        std::function<int(TestClass&)> methodPointer = &TestClass::getName;
-
         TestClass test;
-        tsv::Query<TestClass, int> testQuery;
+        tsv::Query<TestClass> testQuery;
+        std::string testName = "Test";
 
         WHEN( "query is executed" ) {
-            bool result1 = testQuery.execute(test, methodPointer, 10);
-            bool result2 = testQuery.execute(test, methodPointer, 20);
+            bool result1 = testQuery.execute(testName, test, &TestClass::getName);
+            bool result2 = testQuery.execute(20, test, &TestClass::getAge); // NOLINT
 
             THEN( "the comparison is correct" ) {
                 REQUIRE(result1 == true);
