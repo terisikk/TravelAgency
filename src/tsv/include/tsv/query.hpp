@@ -5,14 +5,20 @@
 
 namespace tsv {
 
-    template <class T>
+    template <class T, typename U>
     class Query {
+        
+        private:
+            U compareValue;
+            auto (T::* function)() -> U = nullptr;
 
         public:
-            explicit Query<T>() = default;
+            Query<T, U>(U value, auto (T::* func)() -> U) {
+                compareValue = value;
+                function = func;
+            }
 
-            template<typename U>
-            auto execute(U value, T instance, auto (T::* function)() -> decltype(value)) -> bool { return (instance.*function)() == value; };
+            auto execute(T& instance) -> bool { return (instance.*function)() == compareValue; };
     };
 } // namespace tsv
 

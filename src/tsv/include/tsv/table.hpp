@@ -5,24 +5,30 @@
 #include <string>
 #include <vector>
 
+#include "tsv/query.hpp"
+
 namespace tsv {
 
+template<class T>
 class Table {
     std::string name = "";
-    std::vector<std::string> fieldNames = {};
-    std::vector<std::vector<std::string>> rows = {};
+    std::vector<T> rows = {};
 
     public:
-        Table() = default;
-        explicit Table(const std::string& name, const std::vector<std::string>& fieldNames);
+        Table<T>() = default;
+        explicit Table<T>(const std::string& name) { this->name = name; };
 
-        auto describe() -> std::string;
-        auto insert(const std::vector<std::string>& row) -> bool;
-        auto select() -> std::vector<std::vector<std::string>>;
-        auto select(const std::vector<std::string>& query) -> std::vector<std::vector<std::string>>;
+        auto insert(T& item) -> bool { rows.emplace_back(item); return true; };
+        auto select() -> std::vector<T> { return rows; };
+        
+        template<typename U>
+        auto select(Query<T, U>& query) -> std::vector<T> { 
+            std::vector<T> result = {};
 
-    private:
-        auto filterByFieldValue(const std::vector<std::string>& row, const std::string& field, const std::string& value) -> bool;
+            std::copy_if(rows.begin(), rows.end(), std::back_inserter(result), [&query](T row) { return query.execute(row);});
+
+            return result;
+        };
 };
 
 } // namespace tsv
