@@ -1,17 +1,36 @@
+#include <fstream>
 #include <iostream>
 #include <string>
+#include <vector>
+
+#include "tsv/reader.hpp"
+#include "tsv/table.hpp"
+#include "tsv/query.hpp"
 
 #include "TravelAgencyConfig.h"
-#include "tsv/reader.hpp"
+#include "agency.hpp"
 
-auto main(int argc, char* argv[]) -> int
+
+auto main() -> int
 {
-  if (argc < 2) {
-    std::cout << argv[0] << " Version " << TravelAgency_VERSION_MAJOR << "."
-              << TravelAgency_VERSION_MINOR << std::endl;
-    std::cout << "Usage: " << argv[0] << " number" << std::endl;
-    return 1;
-  }
+    std::ifstream ifs;
+    ifs.open("agencies.txt", std::ios_base::in);
 
-  return 0;
+    tsv::Table<Agency> agencyTable("agencies");
+
+    while(!ifs.eof()) {
+        std::vector<std::string> items = tsv::Reader::readRow(ifs);
+        if(!items.empty()) {
+            Agency agency(items.at(0), items.at(1), items.at(2), items.at(3), items.at(4));
+            agencyTable.insert(agency);
+        }
+    }
+
+    tsv::Query<Agency, std::string> query("Agency#8", &Agency::getName);
+
+    for(auto& agency : agencyTable.select(query)) {
+        std::cout << agency.getName() << " " << agency.getRegisteredDate() << std::endl;
+    }
+
+    return 0;
 }
