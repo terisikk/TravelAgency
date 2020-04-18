@@ -3,12 +3,13 @@
 #include <string>
 #include <vector>
 
+#include "tsv/query.hpp"
 #include "tsv/reader.hpp"
 #include "tsv/table.hpp"
-#include "tsv/query.hpp"
 
 #include "TravelAgencyConfig.h"
 #include "agency.hpp"
+#include "agencybuilder.hpp"
 
 
 auto main() -> int
@@ -21,7 +22,7 @@ auto main() -> int
     while(!ifs.eof()) {
         std::vector<std::string> items = tsv::Reader::readRow(ifs);
         if(!items.empty()) {
-            Agency agency(items.at(0), items.at(1), items.at(2), items.at(3), items.at(4));
+            Agency agency = AgencyBuilder::build(items);
             agencyTable.insert(agency);
         }
     }
@@ -29,7 +30,7 @@ auto main() -> int
     tsv::Query<Agency, std::string> query("Agency#8", &Agency::getName);
 
     for(auto& agency : agencyTable.select(query)) {
-        std::cout << agency.getName() << " " << agency.getRegisteredDate() << std::endl;
+        std::cout << agency.getName() << " " << agency.getStaffCount() << std::endl;
     }
 
     return 0;

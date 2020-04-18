@@ -17,4 +17,12 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(catch)
 include(${catch_SOURCE_DIR}/contrib/Catch.cmake)
 
-package_add_test(test_tsv tsv_library tsv/test_reader.cxx tsv/test_table.cxx tsv/test_query.cxx)
+package_add_test(test_tsv tsv_library 
+  tsv/test_reader.cxx 
+  tsv/test_table.cxx 
+  tsv/test_query.cxx
+  )
+
+add_executable(test_acceptance acceptance/test_agencybuilder.cxx)
+target_link_libraries(test_acceptance PRIVATE Catch2::Catch2 tsv_library app_library)
+catch_discover_tests(test_acceptance)

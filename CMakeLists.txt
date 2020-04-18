@@ -6,11 +6,11 @@ project(TravelAgency VERSION 1.0)
 
 set(CMAKE_CXX_FLAGS "-Wall -stdlib=libc++")
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
-#set(CMAKE_CXX_CLANG_TIDY /usr/bin/clang-tidy 
-#    -checks=*,-fuchsia*,-cppcoreguidelines-pro-bounds-pointer-arithmetic,-cppcoreguidelines-pro-type-vararg,-hicpp-vararg,-cert-*;
-#    -header-filter=.*/\(src|test|include\)/.*;
-#    -warnings-as-errors=*;
-#    -fix)
+set(CMAKE_CXX_CLANG_TIDY /usr/bin/clang-tidy 
+    -checks=*,-fuchsia*,-cppcoreguidelines-pro-bounds-pointer-arithmetic,-cppcoreguidelines-pro-type-vararg,-hicpp-vararg,-cert-*;
+    -header-filter=.*/\(src|test|include\)/.*;
+    -warnings-as-errors=*;
+    -fix)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)

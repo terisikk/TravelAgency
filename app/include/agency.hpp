@@ -1,23 +1,26 @@
 #ifndef AGENCY_HPP
 #define AGENCY_HPP
 
+#include <ctime>
+#include <sstream>
 #include <string>
 
 class Agency {
-    std::string ID;
+    int ID = 0;
+    int staffCount = 0;
+    std::tm registeredDate = {};
+
     std::string name;
-    std::string registeredDate;
-    std::string staffCount;
     std::string chiefName;
 
     public:
         Agency() = default;
-        Agency(std::string ID, std::string name, std::string registeredDate, std::string staffCount, std::string chiefName);
+        Agency(int ID, std::string name, std::tm registeredDate, int staffCount, std::string chiefName);
 
-        auto getID() -> std::string;
+        auto getID() const -> int;
         auto getName() -> std::string;
-        auto getRegisteredDate() -> std::string;
-        auto getStaffCount() -> std::string;
+        auto getRegisteredDate() -> std::tm;
+        auto getStaffCount() const -> int;
         auto getChiefName() -> std::string;
 
 };
