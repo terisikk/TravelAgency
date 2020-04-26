@@ -10,7 +10,6 @@ auto Reader::readRow(std::istream& stream) -> std::vector<std::string> {
     std::getline(stream, line);
     std::stringstream rowstream(line);
 
-
     while(std::getline(rowstream, item, '\t'))
     {
         items.emplace_back(item);

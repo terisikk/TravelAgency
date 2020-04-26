@@ -15,7 +15,7 @@ class Table {
     std::vector<T> rows = {};
 
     public:
-        Table<T>() = default;
+        Table() = default;
         explicit Table<T>(const std::string& name) { this->name = name; };
 
         auto insert(T& item) -> bool { rows.emplace_back(item); return true; };

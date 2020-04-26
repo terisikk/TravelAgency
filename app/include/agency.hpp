@@ -4,6 +4,7 @@
 #include <ctime>
 #include <sstream>
 #include <string>
+#include <utility>
 
 class Agency {
     int ID = 0;
@@ -15,13 +16,14 @@ class Agency {
 
     public:
         Agency() = default;
-        Agency(int ID, std::string name, std::tm registeredDate, int staffCount, std::string chiefName);
+        Agency(int ID, std::string name, std::tm registeredDate, int staffCount, std::string chiefName) 
+            : ID(ID), staffCount(staffCount), registeredDate(registeredDate), name(std::move(name)), chiefName(std::move(chiefName)) {};
 
-        auto getID() const -> int;
-        auto getName() -> std::string;
-        auto getRegisteredDate() -> std::tm;
-        auto getStaffCount() const -> int;
-        auto getChiefName() -> std::string;
+        auto getID() const -> int { return ID; };
+        auto getName() -> std::string { return name; };
+        auto getRegisteredDate() -> std::tm { return registeredDate; };
+        auto getStaffCount() const -> int { return staffCount; };
+        auto getChiefName() -> std::string { return chiefName; };
 
 };
 #endif
