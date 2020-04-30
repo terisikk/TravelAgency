@@ -10,15 +10,15 @@ namespace tsv {
         
         private:
             U compareValue;
-            auto (T::* function)() -> U = nullptr;
+            std::function<auto(T&) -> U> function;
 
         public:
-            Query<T, U>(U value, auto (T::* func)() -> U) {
+            Query<T, U>(U value, std::function<auto(T&) -> U> func) {
                 compareValue = value;
                 function = func;
             }
 
-            auto execute(T& instance) -> bool { return (instance.*function)() == compareValue; };
+            auto execute(T& instance) -> bool { return function(instance) == compareValue; };
     };
 } // namespace tsv
 

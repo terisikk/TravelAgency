@@ -1,11 +1,15 @@
 #ifndef TSV_TABLE_HPP
 #define TSV_TABLE_HPP
 
+#include <fstream>
+#include <functional> 
+#include <iostream>
 #include <iterator>
 #include <string>
 #include <vector>
 
 #include "tsv/query.hpp"
+#include "tsv/reader.hpp"
 
 namespace tsv {
 
@@ -29,6 +33,19 @@ class Table {
 
             return result;
         };
+
+        auto populate(const std::string& filename, std::function<auto(std::vector<std::string>) -> T> builderFunction) -> void {
+            std::ifstream ifs;
+            ifs.open(filename, std::ios_base::in);
+
+            while(!ifs.eof()) {
+                std::vector<std::string> items = tsv::Reader::readRow(ifs);
+                if(!items.empty()) {
+                    T construct = builderFunction(items);
+                    this->insert(construct);
+                }
+            }
+        }
 };
 
 } // namespace tsv
