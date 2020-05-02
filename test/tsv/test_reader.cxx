@@ -35,6 +35,17 @@ SCENARIO( "Reader can read file data", "[reader]" ) {
             }
         }
 
+        WHEN ("data with a windows style newline is passed") {
+            stream = std::istringstream("This is\ta line.\r\nline\ttwo\r\nline\tthree");
+            expected = {"This is", "a line."};
+            actual = tsv::Reader::readRow(stream);
+
+            THEN( "only one row of items is returned, with carriage return stripped" ) {
+                REQUIRE( actual.size() == 2 );
+                REQUIRE( actual == expected );
+            }
+        }
+
         WHEN( "data with single tab is passed" ) {
             stream = std::istringstream("this\tis input");
             expected = {"this", "is input"};

@@ -7,7 +7,7 @@ project(TravelAgency VERSION 1.0)
 set(CMAKE_CXX_FLAGS "-Wall -stdlib=libc++")
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_CLANG_TIDY /usr/bin/clang-tidy 
-    -checks=*,-fuchsia*,-cppcoreguidelines-pro-bounds-pointer-arithmetic,-cppcoreguidelines-pro-type-vararg,-hicpp-vararg,-cert-*;
+    -checks=*,-fuchsia*,-cppcoreguidelines-pro-bounds-pointer-arithmetic,-cppcoreguidelines-pro-type-vararg,-hicpp-vararg,-cert-*,-google-readability-braces-around-statements,-hicpp-braces-around-statements;
     -header-filter=.*/\(src|test|include\)/.*;
     -warnings-as-errors=*;
     -fix)

@@ -8,7 +8,8 @@
 #include "agencybuilder.hpp"
 #include "customer.hpp"
 #include "customerbuilder.hpp"
-
+#include "driver.hpp"
+#include "driverbuilder.hpp"
 
 auto main() -> int
 {
@@ -19,10 +20,19 @@ auto main() -> int
         tsv::Table<Customer> customers("customers");
         customers.populate("customers.txt", CustomerBuilder::build);
 
-        tsv::Query<Agency, std::string> querya("Agency#8", &Agency::getName);
+        tsv::Table<Driver> drivers("drivers");
+        drivers.populate("drivers.txt", DriverBuilder::build);
+
+        tsv::Query<Agency, std::string> querya("Agency#7", &Agency::getName);
 
         for(auto& agency : agencies.select(querya)) {
             std::cout << agency.getName() << " " << agency.getStaffCount() << std::endl;
+        }
+
+        tsv::Query<Driver, std::string> queryd("Grit Dixus", &Driver::getCarModel);
+
+        for(auto& driver : drivers.select(queryd)) {
+            std::cout << driver.getName() << " " << driver.getCarModel() << std::endl;
         }
 
         const int TEST_CUSTOMER_ID = 9031;
@@ -31,6 +41,8 @@ auto main() -> int
         for(auto& customer : customers.select(queryc)) {
             std::cout << customer.getName() << " " << customer.getPhone() << std::endl;
         }
+
+
     } catch (...) {
         return 0;
     }

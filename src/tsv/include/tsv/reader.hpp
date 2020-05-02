@@ -13,6 +13,7 @@ class Reader
     public:
         static auto readFile(const std::string& filename) -> std::string;
         static auto readRow(std::istream& stream) -> std::vector<std::string>;
+        static auto safeGetLine(std::istream& stream, std::string* line) -> std::istream&;
 };
 
 } // namespace tsv
