@@ -1,7 +1,7 @@
 file(GLOB HEADER_LIST CONFIGURE_DEPENDS "include/*.hpp")
 file(GLOB CXX_LIST CONFIGURE_DEPENDS "*.cxx")
 
-add_executable(TravelAgency ${HEADER_LIST} TravelAgency.cxx agencybuilder.cxx customerbuilder.cxx driverbuilder.cxx)
+add_executable(TravelAgency ${HEADER_LIST} ${CXX_LIST})
 
 target_link_libraries(TravelAgency PRIVATE tsv_library)
 target_include_directories(TravelAgency PRIVATE "${PROJECT_BINARY_DIR}/include")
