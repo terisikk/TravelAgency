@@ -17,6 +17,7 @@ class Context {
 
         auto transition(State* state) -> void;
         auto getOutput() -> std::string;
+        auto getOutput(const std::string& input) -> std::string;
 };
 
 } // namespace ui

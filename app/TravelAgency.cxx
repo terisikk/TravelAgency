@@ -3,7 +3,10 @@
 #include "tsv/query.hpp"
 #include "tsv/table.hpp"
 
+#include "ui/context.hpp"
+
 #include "TravelAgencyConfig.h"
+#include "agency_query_state.hpp"
 #include "agencybuilder.hpp"
 #include "customerbuilder.hpp"
 #include "driverbuilder.hpp"
@@ -28,23 +31,17 @@ auto main() -> int
 
         std::cout << " done." << std::endl;
 
+        AgencyQueryState agencyQueryState(&agencies);
+        ui::Context uiContext(&agencyQueryState);
+
         while(true) {
-            std::cout << "Enter agency name: ";
+            std::cout << uiContext.getOutput();
 
             std::string agencyName;
             std::cin >> agencyName;
 
-            tsv::Query<Agency, std::string> query(agencyName, &Agency::getName);
-            for(auto& agency : agencies.select(query)) {
-                const std::tm& time = std::tm(agency.getRegisteredDate());
+            std::cout << uiContext.getOutput(agencyName);
 
-                std::cout << "ID:\t\t" << agency.getID() << std::endl
-                    << "Name:\t\t" << agency.getName() << std::endl
-                    << "Registered:\t" << std::put_time(&time, "%Y.%m.%d")  << std::endl
-                    << "Staff count:\t" << agency.getStaffCount() << std::endl
-                    << "Chief:\t\t" << agency.getChiefName() << std::endl
-                    << std::endl;
-            } 
         }
 
         /*

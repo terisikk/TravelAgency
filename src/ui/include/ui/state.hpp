@@ -9,6 +9,7 @@ class State {
     public:
         State() = default;
         virtual auto getOutput() -> std::string = 0;
+        virtual auto getOutput(const std::string& input) -> std::string = 0;
         
 };
 

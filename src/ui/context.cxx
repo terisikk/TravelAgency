@@ -1,3 +1,5 @@
+#include <utility>
+
 #include "ui/context.hpp"
 
 namespace ui {
@@ -13,6 +15,14 @@ auto Context::transition(State* state) -> void {
 auto Context::getOutput() -> std::string {
     if(state != nullptr) {
         return state->getOutput();
+    } 
+
+    return "";
+}
+
+auto Context::getOutput(const std::string& input) -> std::string {
+    if(state != nullptr) {
+        return state->getOutput(input);
     } 
 
     return "";

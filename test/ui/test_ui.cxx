@@ -10,12 +10,20 @@ class ConcreteState1 : public ui::State {
         auto getOutput() -> std::string override {
             return "This is state1";
         };
+
+        auto getOutput(const std::string& input) -> std::string override {
+            return "This is state1 - " + input;
+        };
 };
 
 class ConcreteState2 : public ui::State {
     public:
         auto getOutput() -> std::string override {
             return "This is state2";
+        };
+
+        auto getOutput(const std::string& input) -> std::string override {
+            return "This is state2 - " + input;
         };
 };
 
@@ -59,5 +67,19 @@ SCENARIO( "States can be changed" ) {
                 REQUIRE( context.getOutput() == expected );
             }
         }
+    }
+
+    GIVEN( "Context and a state ") {
+        ConcreteState1 state1;
+        ui::Context context(&state1);
+
+        WHEN( "state output is requested with input" ) {
+            std::string actual = context.getOutput("input to state");
+            std::string expected = "This is state1 - input to state"; 
+
+            THEN( "input can be processed" ) {
+                REQUIRE( actual == expected );
+            }
+        }       
     }
 }
