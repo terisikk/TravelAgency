@@ -19,10 +19,10 @@ class Agency {
             : ID(ID), staffCount(staffCount), registeredDate(registeredDate), name(std::move(name)), chiefName(std::move(chiefName)) {};
 
         auto getID() const -> int { return ID; };
-        auto getName() -> std::string { return name; };
-        auto getRegisteredDate() -> std::tm { return registeredDate; };
+        auto getName() const -> std::string { return name; };
+        auto getRegisteredDate() const -> std::tm { return registeredDate; };
         auto getStaffCount() const -> int { return staffCount; };
-        auto getChiefName() -> std::string { return chiefName; };
+        auto getChiefName() const -> std::string { return chiefName; };
 
 };
 #endif

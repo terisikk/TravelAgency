@@ -7,7 +7,7 @@
 
 #include "TravelAgencyConfig.h"
 #include "agency_query_state.hpp"
-#include "agencybuilder.hpp"
+#include "agencymapper.hpp"
 #include "customerbuilder.hpp"
 #include "driverbuilder.hpp"
 #include "travelbuilder.hpp"
@@ -18,7 +18,7 @@ auto main() -> int
         std::cout << "Loading database...";
 
         tsv::Table<Agency> agencies("agencies");
-        agencies.populate("agencies.txt", AgencyBuilder::build);
+        agencies.populate("agencies.txt", AgencyMapper::build);
 
         tsv::Table<Customer> customers("customers");
         customers.populate("customers.txt", CustomerBuilder::build);

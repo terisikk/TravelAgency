@@ -16,13 +16,7 @@ auto AgencyQueryState::getOutput(const std::string& input) -> std::string {
         output << "ID\t\tName\t\tRegistered\t\tStaff count\t\tChief" << std::endl;
 
         for(auto& agency : table->select(query)) {
-            const std::tm& time = std::tm(agency.getRegisteredDate());
-
-            output  << agency.getID() << "\t\t"
-                    << agency.getName() << "\t"
-                    << std::put_time(&time, "%Y.%m.%d") << "\t\t"
-                    << agency.getStaffCount() << "\t\t\t"
-                    << agency.getChiefName() << std::endl;
+            output << AgencyMapper::toString(agency);
         }
 
         return output.str();

@@ -5,7 +5,7 @@
 #include <ctime>
 #include <sstream>
 
-#include "agency.hpp"
+#include "agencymapper.hpp"
 #include "tsv/query.hpp"
 #include "tsv/table.hpp"
 #include "ui/context.hpp"
