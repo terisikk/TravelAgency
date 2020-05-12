@@ -20,11 +20,11 @@ class Driver {
         Driver(int ID, int agencyID, std::string name, std::tm employmentDate, std::string carModel)
             : ID(ID), agencyID(agencyID), name(std::move(name)), employmentDate(employmentDate), carModel(std::move(carModel)) {};
 
-        auto getID() -> int { return ID; }; // NOLINT
-        auto getAgencyID() -> int { return agencyID; }; // NOLINT
-        auto getName() -> std::string { return name; };
-        auto getEmplyomentDate() -> std::tm { return employmentDate; };
-        auto getCarModel() -> std::string { return carModel; };
+        auto getID() const -> int { return ID; };
+        auto getAgencyID() const -> int { return agencyID; };
+        auto getName() const -> std::string { return name; };
+        auto getEmploymentDate() const -> std::tm { return employmentDate; };
+        auto getCarModel() const -> std::string { return carModel; };
 };
 
 #endif

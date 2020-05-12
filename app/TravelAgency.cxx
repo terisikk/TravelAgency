@@ -7,9 +7,8 @@
 
 #include "TravelAgencyConfig.h"
 #include "agency_query_state.hpp"
-#include "agencymapper.hpp"
 #include "customerbuilder.hpp"
-#include "driverbuilder.hpp"
+#include "driver_query_state.hpp"
 #include "travelbuilder.hpp"
 
 auto main() -> int
@@ -24,23 +23,24 @@ auto main() -> int
         customers.populate("customers.txt", CustomerBuilder::build);
 
         tsv::Table<Driver> drivers("drivers");
-        drivers.populate("drivers.txt", DriverBuilder::build);
+        drivers.populate("drivers.txt", DriverMapper::build);
 
         tsv::Table<Travel> travels("travels");
         travels.populate("travels.txt", TravelBuilder::build);
 
         std::cout << " done." << std::endl;
 
-        AgencyQueryState agencyQueryState(&agencies);
-        ui::Context uiContext(&agencyQueryState);
+        //AgencyQueryState agencyQueryState(&agencies);
+        DriverQueryState driverQueryState(&drivers);
+        ui::Context uiContext(&driverQueryState);
 
         while(true) {
             std::cout << uiContext.getOutput();
 
-            std::string agencyName;
-            std::cin >> agencyName;
+            std::string input;
+            std::cin >> input;
 
-            std::cout << uiContext.getOutput(agencyName);
+            std::cout << uiContext.getOutput(input);
 
         }
 

@@ -1,19 +1,21 @@
-#ifndef AGENCY_QUERY_STATE_HPP
-#define AGENCY_QUERY_STATE_HPP
+#ifndef DRIVER_QUERY_STATE_HPP
+#define DRIVER_QUERY_STATE_HPP
 
+
+#include <ctime>
 #include <sstream>
 
-#include "agencymapper.hpp"
+#include "drivermapper.hpp"
 #include "tsv/query.hpp"
 #include "tsv/table.hpp"
 #include "ui/context.hpp"
 
-class AgencyQueryState : public ui::State {
+class DriverQueryState : public ui::State {
     private:
-        tsv::Table<Agency>* table = nullptr;
+        tsv::Table<Driver>* table = nullptr;
 
     public:
-        explicit AgencyQueryState(tsv::Table<Agency>* table); 
+        explicit DriverQueryState(tsv::Table<Driver>* table); 
 
         auto getOutput() -> std::string override;
         auto getOutput(const std::string& input) -> std::string override;

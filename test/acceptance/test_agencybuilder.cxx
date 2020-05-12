@@ -13,7 +13,7 @@ SCENARIO( "Agency builder can build agencies" ) {
 
         WHEN( "a build process is executed" ) {
 
-            Agency agency = AgencyBuilder::build(data);
+            Agency agency = AgencyMapper::build(data);
 
             THEN( "the agency is correctly created" ) {
 

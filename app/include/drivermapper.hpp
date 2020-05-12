@@ -1,5 +1,5 @@
-#ifndef DRIVERBUILDER_HPP
-#define DRIVERBUILDER_HPP
+#ifndef DRIVERMAPPER_HPP
+#define DRIVERMAPPER_HPP
 
 #include <iomanip>
 #include <sstream>
@@ -8,12 +8,14 @@
 
 #include <driver.hpp>
 
-class DriverBuilder {
+class DriverMapper {
     
     public:
-        DriverBuilder() = default;
+        DriverMapper() = default;
 
         static auto build(std::vector<std::string> data) -> Driver;
+        static auto toString(const Driver& driver) -> std::string;
+
 };
 
 #endif
