@@ -64,7 +64,7 @@ SCENARIO( "Table can be created" ) {
         WHEN( "data is queried by name value" ) {
             std::string expectedName = "Dixus_2";
 
-            tsv::Query<TestClassTable, std::string> query(expectedName, &TestClassTable::getName);
+            tsv::Query<TestClassTable> query([expectedName](TestClassTable& instance) { return instance.getName() == expectedName;});
             std::vector<TestClassTable> result = table.select(query);
 
             THEN( "only matching rows are selected" ) {
@@ -77,10 +77,10 @@ SCENARIO( "Table can be created" ) {
             std::string expectedName = "Dixus_2";
             int expectedAge = TEST_AGE;
 
-            tsv::Query<TestClassTable, std::string> query1(expectedName, &TestClassTable::getName);
+            tsv::Query<TestClassTable> query1([expectedName](TestClassTable& instance) { return instance.getName() == expectedName;});
             std::vector<TestClassTable> result1 = table.select(query1);
 
-            tsv::Query<TestClassTable, int> query2(expectedAge, &TestClassTable::getAge);
+            tsv::Query<TestClassTable> query2([expectedAge](TestClassTable& instance) { return instance.getAge() == expectedAge;});
             std::vector<TestClassTable> result2 = table.select(query2);
 
             THEN( "only matching rows are selected" ) {
@@ -95,7 +95,7 @@ SCENARIO( "Table can be created" ) {
         WHEN( "data is queried by nonexisting value" ) {
             std::string falseName = "Praxis";
 
-            tsv::Query<TestClassTable, std::string> query(falseName, &TestClassTable::getName);
+            tsv::Query<TestClassTable> query([falseName](TestClassTable& instance) { return instance.getName() == falseName;});
             std::vector<TestClassTable> result = table.select(query);
 
             THEN( "empty result set is returned" ) {

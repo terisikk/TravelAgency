@@ -5,12 +5,20 @@ DriverQueryState::DriverQueryState(tsv::Table<Driver>* table) {
 }
 
 auto DriverQueryState::getOutput() -> std::string {
-    return "Enter driver name: ";
+    return "Enter driver name or ID: ";
 }
 
 auto DriverQueryState::getOutput(const std::string& input) -> std::string {
     if(table != nullptr) {
-        tsv::Query<Driver, std::string> query(input, &Driver::getName);
+        int queryID = -1;
+
+        try {
+            queryID = std::stoi(input);
+        } catch(...) {
+            queryID = -1;
+        }
+
+        tsv::Query<Driver> query([input, queryID](Driver& driver) {return driver.getName() == input || driver.getID() == queryID ;});
 
         std::stringstream output;
         output << "ID\tAgency ID\tName\t\tEmplyoment date\t\tCar model" << std::endl;

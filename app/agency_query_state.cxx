@@ -5,12 +5,20 @@ AgencyQueryState::AgencyQueryState(tsv::Table<Agency>* table) {
 }
 
 auto AgencyQueryState::getOutput() -> std::string {
-    return "Enter agency name: ";
+    return "Enter agency name or ID: ";
 }
 
 auto AgencyQueryState::getOutput(const std::string& input) -> std::string {
     if(table != nullptr) {
-        tsv::Query<Agency, std::string> query(input, &Agency::getName);
+        int queryID = -1;
+
+        try {
+            queryID = std::stoi(input);
+        } catch(...) {
+            queryID = -1;
+        }
+
+        tsv::Query<Agency> query([input, queryID](Agency& agency) {return agency.getName() == input || agency.getID() == queryID ;});
 
         std::stringstream output;
         output << "ID\t\tName\t\tRegistered\t\tStaff count\t\tChief" << std::endl;

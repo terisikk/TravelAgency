@@ -16,8 +16,8 @@ SCENARIO( "Queries can be created" ) {
         TestClassQuery test;
         std::string testName("Test");
 
-        tsv::Query<TestClassQuery, std::string> testQuery1(testName, &TestClassQuery::getName);
-        tsv::Query<TestClassQuery, int> testQuery2(20, &TestClassQuery::getAge); // NOLINT
+        tsv::Query<TestClassQuery> testQuery1([testName](TestClassQuery instance) { return instance.getName() == testName; });
+        tsv::Query<TestClassQuery> testQuery2([](TestClassQuery instance) { return instance.getAge() == 20; }); // NOLINT
 
         WHEN( "query is executed" ) {
             bool result1 = testQuery1.execute(test);
