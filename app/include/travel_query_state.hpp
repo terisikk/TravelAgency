@@ -10,10 +10,10 @@
 
 class TravelQueryState : public ui::State {
     private:
-        tsv::Table<Travel>* table = nullptr;
+        tsv::Table* table = nullptr;
 
     public:
-        explicit TravelQueryState(tsv::Table<Travel>* table); 
+        explicit TravelQueryState(tsv::Table* table); 
 
         auto getOutput() -> std::string override;
         auto getOutput(const std::string& input) -> std::string override;

@@ -12,10 +12,10 @@
 
 class DriverQueryState : public ui::State {
     private:
-        tsv::Table<Driver>* table = nullptr;
+        tsv::Table* table = nullptr;
 
     public:
-        explicit DriverQueryState(tsv::Table<Driver>* table); 
+        explicit DriverQueryState(tsv::Table* table); 
 
         auto getOutput() -> std::string override;
         auto getOutput(const std::string& input) -> std::string override;

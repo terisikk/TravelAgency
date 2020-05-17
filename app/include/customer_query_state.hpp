@@ -10,10 +10,10 @@
 
 class CustomerQueryState : public ui::State {
     private:
-        tsv::Table<Customer>* table = nullptr;
+        tsv::Table* table = nullptr;
 
     public:
-        explicit CustomerQueryState(tsv::Table<Customer>* table); 
+        explicit CustomerQueryState(tsv::Table* table); 
 
         auto getOutput() -> std::string override;
         auto getOutput(const std::string& input) -> std::string override;

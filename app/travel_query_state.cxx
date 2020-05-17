@@ -1,6 +1,6 @@
 #include "travel_query_state.hpp"
 
-TravelQueryState::TravelQueryState(tsv::Table<Travel>* table) {
+TravelQueryState::TravelQueryState(tsv::Table* table) {
     this->table = table;
 }
 
@@ -18,7 +18,7 @@ auto TravelQueryState::getOutput(const std::string& input) -> std::string {
             queryID = -1;
         }
 
-        tsv::Query<Travel> query([queryID](Travel& travel) {return travel.getCustomerID() == queryID ;});
+        tsv::query::EQ query("CID", queryID);
 
         std::stringstream output;
         output << "ID\t\tDriver ID\t\tStart Time\t\tCustomer ID\t\tOrigin\t\tDestination\t\tPayment" << std::endl;

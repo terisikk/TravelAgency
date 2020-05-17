@@ -10,10 +10,10 @@
 
 class AgencyQueryState : public ui::State {
     private:
-        tsv::Table<Agency>* table = nullptr;
+        tsv::Table* table = nullptr;
 
     public:
-        explicit AgencyQueryState(tsv::Table<Agency>* table); 
+        explicit AgencyQueryState(tsv::Table* table); 
 
         auto getOutput() -> std::string override;
         auto getOutput(const std::string& input) -> std::string override;

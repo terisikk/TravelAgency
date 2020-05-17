@@ -16,16 +16,16 @@ auto main() -> int
     try {
         std::cout << "Loading database...";
 
-        tsv::Table<Agency> agencies("agencies");
+        tsv::Table agencies({"ID", "NAME", "RDATE", "SCOUNT", "CNAME"});
         agencies.populate("agencies.txt", AgencyMapper::build);
 
-        tsv::Table<Customer> customers("customers");
+        tsv::Table customers({"ID", "NAME", "PHONE", "ADDRESS"});
         customers.populate("customers.txt", CustomerMapper::build);
 
-        tsv::Table<Driver> drivers("drivers");
+        tsv::Table drivers({"ID", "AID", "NAME", "EDATE", "CAR"});
         drivers.populate("drivers.txt", DriverMapper::build);
 
-        tsv::Table<Travel> travels("travels");
+        tsv::Table travels({"ID", "STIME", "CID", "ORIGIN", "DESTINATION", "PAYMENT"});
         travels.populate("travels.txt", TravelMapper::build);
 
         std::cout << " done." << std::endl;

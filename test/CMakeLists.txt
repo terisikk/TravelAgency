@@ -19,9 +19,8 @@ include(${catch_SOURCE_DIR}/contrib/Catch.cmake)
 
 package_add_test(test_tsv tsv_library 
   tsv/test_reader.cxx 
-  tsv/test_table.cxx 
-  tsv/test_query.cxx
-  )
+  tsv/test_table.cxx
+)
 
 package_add_test(test_ui ui_library ui/test_ui.cxx)
 

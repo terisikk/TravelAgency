@@ -4,99 +4,83 @@
 #include "tsv/query.hpp"
 #include "tsv/table.hpp"
 
-const int TEST_AGE = 10;
-
-class TestClassTable {
-    std::string name;
-    int age;
-
-    public:
-        explicit TestClassTable(const std::string& name, const int age) { this->name = name; this->age = age;};
-        auto getName() -> std::string { return name; };
-        auto getAge() -> int { return age; }; // NOLINT
-};
+static const int TEST_AGE = 10;
 
 SCENARIO( "Table can be created" ) {
     GIVEN( "table" ) {
-        const std::string name = "EMPLOYEES";        
-        tsv::Table<TestClassTable> table(name);
+        std::vector<std::string> keys = {"ID", "NAME", "AGE"};
+        tsv::Table table(keys);
 
         WHEN( "data is inserted to the table ") {
-            TestClassTable data("Dixus", TEST_AGE);
-            std::string expected = data.getName();
+            std::vector<std::string> data = {"0", "Dixus", std::to_string(TEST_AGE)};
 
             const bool success = table.insert(data);
 
             THEN( "it can be read" ) {
                 REQUIRE( success );
-                REQUIRE( table.select().front().getName() == expected );
+                REQUIRE( table.select().front()[0] == data[0] );
             }
         }
 
         WHEN( "multiple rows are inserted to the table ") {
+            std::string id1 = "1";
+            std::string id2 = "2";
             std::string expectedName1 = "Dixus";
             std::string expectedName2 = "Bixus";
             
-            TestClassTable data1(expectedName1, TEST_AGE);
-            TestClassTable data2(expectedName2, TEST_AGE);
+            std::vector<std::string> data1 = {id1, expectedName1, std::to_string(TEST_AGE)};
+            std::vector<std::string> data2 = {id2, expectedName2, std::to_string(TEST_AGE)};
 
             const bool success1 = table.insert(data1);
             const bool success2 = table.insert(data2);
 
             THEN( "they can be read" ) {
                 REQUIRE( (success1 && success2) == true );
-                REQUIRE( table.select().front().getName() == expectedName1 );
-                REQUIRE( table.select().back().getName() == expectedName2 );
+                REQUIRE( table.select().front()[1] == expectedName1 );
+                REQUIRE( table.select().back()[1] == expectedName2 );
             }
         }
     }
 
     GIVEN( "populated table" ) {
-        const std::string name = "EMPLOYEES";        
-        tsv::Table<TestClassTable> table(name);
+        std::vector<std::string> keys = {"ID", "NAME", "AGE"};
+        tsv::Table table(keys);
         const int ITEM_COUNT = 20;
 
         for(int i = 0; i < ITEM_COUNT; i++) {
-            TestClassTable data("Dixus_" + std::to_string(i), i); 
+            std::vector<std::string> data = {std::to_string(i), "Dixus_" + std::to_string(i), std::to_string(i * TEST_AGE)}; 
             table.insert(data); 
+        }
+
+        WHEN( "data is queried by ID" ) {
+            std::string expectedName = "Dixus_4";
+
+            tsv::query::EQ query("ID", "4");
+            std::vector<std::vector<std::string>> result = table.select(query);
+
+            THEN( "only matching rows are selected" ) {
+                REQUIRE( result.size() == 1 );
+                REQUIRE( result.front()[1] == expectedName );
+            }
         }
 
         WHEN( "data is queried by name value" ) {
             std::string expectedName = "Dixus_2";
 
-            tsv::Query<TestClassTable> query([expectedName](TestClassTable& instance) { return instance.getName() == expectedName;});
-            std::vector<TestClassTable> result = table.select(query);
+            tsv::query::EQ query("NAME", expectedName);
+            std::vector<std::vector<std::string>> result = table.select(query);
 
             THEN( "only matching rows are selected" ) {
                 REQUIRE( result.size() == 1 );
-                REQUIRE( result.front().getName() == expectedName );
+                REQUIRE( result.front()[1] == expectedName );
             }
-        }
-
-        WHEN( "data is queried by two different types sequentially" ) {
-            std::string expectedName = "Dixus_2";
-            int expectedAge = TEST_AGE;
-
-            tsv::Query<TestClassTable> query1([expectedName](TestClassTable& instance) { return instance.getName() == expectedName;});
-            std::vector<TestClassTable> result1 = table.select(query1);
-
-            tsv::Query<TestClassTable> query2([expectedAge](TestClassTable& instance) { return instance.getAge() == expectedAge;});
-            std::vector<TestClassTable> result2 = table.select(query2);
-
-            THEN( "only matching rows are selected" ) {
-                REQUIRE( result1.size() == 1 );
-                REQUIRE( result1.front().getName() == expectedName );
-
-                REQUIRE( result2.size() == 1 );
-                REQUIRE( result2.front().getAge() == expectedAge );
-            }            
         }
 
         WHEN( "data is queried by nonexisting value" ) {
             std::string falseName = "Praxis";
 
-            tsv::Query<TestClassTable> query([falseName](TestClassTable& instance) { return instance.getName() == falseName;});
-            std::vector<TestClassTable> result = table.select(query);
+            tsv::query::EQ query("NAME", falseName);
+            std::vector<std::vector<std::string>> result = table.select(query);
 
             THEN( "empty result set is returned" ) {
                 REQUIRE ( result.empty() );

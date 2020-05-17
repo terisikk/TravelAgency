@@ -1,6 +1,6 @@
 #include "driver_query_state.hpp"
 
-DriverQueryState::DriverQueryState(tsv::Table<Driver>* table) {
+DriverQueryState::DriverQueryState(tsv::Table* table) {
     this->table = table;
 }
 
@@ -18,12 +18,15 @@ auto DriverQueryState::getOutput(const std::string& input) -> std::string {
             queryID = -1;
         }
 
-        tsv::Query<Driver> query([input, queryID](Driver& driver) {return driver.getName() == input || driver.getID() == queryID ;});
+        tsv::query::EQ nameQuery("NAME", input);
+        tsv::query::EQ idQuery("ID", queryID);
+
+        tsv::query::OR finalQuery(nameQuery, idQuery);
 
         std::stringstream output;
         output << "ID\tAgency ID\tName\t\tEmplyoment date\t\tCar model" << std::endl;
 
-        for(auto& driver : table->select(query)) {
+        for(auto& driver : table->select(finalQuery)) {
             output << DriverMapper::toString(driver);
         }
 
