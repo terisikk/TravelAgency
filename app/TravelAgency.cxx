@@ -7,7 +7,7 @@
 
 #include "TravelAgencyConfig.h"
 #include "agency_query_state.hpp"
-#include "customerbuilder.hpp"
+#include "customer_query_state.hpp"
 #include "driver_query_state.hpp"
 #include "travelbuilder.hpp"
 
@@ -20,7 +20,7 @@ auto main() -> int
         agencies.populate("agencies.txt", AgencyMapper::build);
 
         tsv::Table<Customer> customers("customers");
-        customers.populate("customers.txt", CustomerBuilder::build);
+        customers.populate("customers.txt", CustomerMapper::build);
 
         tsv::Table<Driver> drivers("drivers");
         drivers.populate("drivers.txt", DriverMapper::build);
@@ -31,8 +31,9 @@ auto main() -> int
         std::cout << " done." << std::endl;
 
         //AgencyQueryState agencyQueryState(&agencies);
-        DriverQueryState driverQueryState(&drivers);
-        ui::Context uiContext(&driverQueryState);
+        //DriverQueryState driverQueryState(&drivers);
+        CustomerQueryState customerQueryState(&customers);
+        ui::Context uiContext(&customerQueryState);
 
         while(true) {
             std::cout << uiContext.getOutput();
@@ -43,29 +44,6 @@ auto main() -> int
             std::cout << uiContext.getOutput(input);
 
         }
-
-        /*
-        tsv::Query<Agency, std::string> querya("Agency#7", &Agency::getName);
-        for(auto& agency : agencies.select(querya)) {
-            std::cout << agency.getName() << " " << agency.getStaffCount() << std::endl;
-        }
-
-        tsv::Query<Driver, std::string> queryd("Grit Dixus", &Driver::getCarModel);
-        for(auto& driver : drivers.select(queryd)) {
-            std::cout << driver.getName() << " " << driver.getCarModel() << std::endl;
-        }
-
-        const int TEST_CUSTOMER_ID = 9031;
-        tsv::Query<Customer, int> queryc(TEST_CUSTOMER_ID, &Customer::getID);
-        for(auto& customer : customers.select(queryc)) {
-            std::cout << customer.getName() << " " << customer.getPhone() << std::endl;
-        }
-
-        const int TEST_TRAVEL_ID = 8274;
-        tsv::Query<Travel, int> queryt(TEST_TRAVEL_ID, &Travel::getID);
-        for(auto& travel : travels.select(queryt)) {
-            std::cout << travel.getOrigin() << " -> " << travel.getDestination() << std::endl;
-        }*/
 
     } catch (...) {
         return 0;

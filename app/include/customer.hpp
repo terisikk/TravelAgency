@@ -16,10 +16,10 @@ class Customer {
         Customer(int ID, std::string name, std::string phone, std::string address)
             : ID(ID), name(std::move(name)), phone(std::move(phone)), address(std::move(address)) {};
 
-        auto getID() -> int { return ID; }; // NOLINT
-        auto getName() -> std::string { return name; };
-        auto getPhone() -> std::string { return phone; };
-        auto getAddress() -> std::string { return address; };
+        auto getID() const -> int { return ID; }; 
+        auto getName() const -> std::string { return name; };
+        auto getPhone() const -> std::string { return phone; };
+        auto getAddress() const -> std::string { return address; };
 };
 
 #endif
