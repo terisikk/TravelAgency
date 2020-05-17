@@ -9,7 +9,7 @@
 #include "agency_query_state.hpp"
 #include "customer_query_state.hpp"
 #include "driver_query_state.hpp"
-#include "travelbuilder.hpp"
+#include "travel_query_state.hpp"
 
 auto main() -> int
 {
@@ -26,14 +26,15 @@ auto main() -> int
         drivers.populate("drivers.txt", DriverMapper::build);
 
         tsv::Table<Travel> travels("travels");
-        travels.populate("travels.txt", TravelBuilder::build);
+        travels.populate("travels.txt", TravelMapper::build);
 
         std::cout << " done." << std::endl;
 
         //AgencyQueryState agencyQueryState(&agencies);
         //DriverQueryState driverQueryState(&drivers);
-        CustomerQueryState customerQueryState(&customers);
-        ui::Context uiContext(&customerQueryState);
+        //CustomerQueryState customerQueryState(&customers);
+        TravelQueryState travelQueryState(&travels);
+        ui::Context uiContext(&travelQueryState);
 
         while(true) {
             std::cout << uiContext.getOutput();

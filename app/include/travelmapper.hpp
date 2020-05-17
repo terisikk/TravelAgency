@@ -1,5 +1,5 @@
-#ifndef TRAVELBUILDER_HPP
-#define TRAVELBUILDER_HPP
+#ifndef TRAVELMAPPER_HPP
+#define TRAVELMAPPER_HPP
 
 #include <iomanip>
 #include <sstream>
@@ -8,12 +8,13 @@
 
 #include <travel.hpp>
 
-class TravelBuilder {
+class TravelMapper {
     
     public:
-        TravelBuilder() = default;
+        TravelMapper() = default;
 
         static auto build(std::vector<std::string> data) -> Travel;
+        static auto toString(const Travel& travel) -> std::string;
 };
 
 #endif

@@ -23,14 +23,14 @@ class Travel {
         Travel(int ID, int driverID, std::tm startTime, int customerID, std::string origin, std::string destination, long double payment)
             : ID(ID), driverID(driverID), startTime(startTime), customerID(customerID), origin(std::move(origin)), destination(std::move(destination)), payment(payment) {};
 
-        auto getID() -> int { return ID; }; // NOLINT
-        auto getDriverID() -> int { return driverID; }; // NOLINT
-        auto getCustomerID() -> int { return customerID; }; // NOLINT
+        auto getID() const -> int { return ID; };
+        auto getDriverID() const -> int { return driverID; };
+        auto getCustomerID() const -> int { return customerID; };
 
-        auto getStartTime() -> std::tm { return startTime; };
+        auto getStartTime() const -> std::tm { return startTime; };
         
-        auto getOrigin() -> std::string { return origin; };
-        auto getDestination() -> std::string { return destination; };
+        auto getOrigin() const -> std::string { return origin; };
+        auto getDestination() const -> std::string { return destination; };
 
         auto getPayment() const -> long double { return payment; };
 };
