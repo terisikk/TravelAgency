@@ -10,24 +10,16 @@ auto AgencyQueryState::getOutput() -> std::string {
 
 auto AgencyQueryState::getOutput(const std::string& input) -> std::string {
     if(table != nullptr) {
-        int queryID = -1;
-
-        try {
-            queryID = std::stoi(input);
-        } catch(...) {
-            queryID = -1;
-        }
-        
         tsv::query::EQ nameQuery("NAME", input);
-        tsv::query::EQ idQuery("ID", queryID);
+        tsv::query::EQ idQuery("ID", input);
 
-        tsv::query::OR finalQuery(nameQuery, idQuery);
+        tsv::query::OR finalQuery(&nameQuery, &idQuery);
 
         std::stringstream output;
         output << "ID\t\tName\t\tRegistered\t\tStaff count\t\tChief" << std::endl;
 
-        for(auto& agency : table->select(finalQuery)) {
-            output << AgencyMapper::toString(agency);
+        for(auto& data : table->select(finalQuery)) {
+            output << AgencyMapper::toString(AgencyMapper::build(data));
         }
 
         return output.str();

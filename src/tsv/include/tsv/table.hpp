@@ -1,8 +1,8 @@
 #ifndef TSV_TABLE_HPP
 #define TSV_TABLE_HPP
 
+#include <algorithm>
 #include <fstream>
-#include <functional> 
 #include <iostream>
 #include <map>
 #include <string>
@@ -31,9 +31,29 @@ class Table {
         };
 
         auto select() -> std::vector<std::vector<std::string>> { 
-            return rows; 
+            std::vector<std::vector<std::string>> result;
+            result = rows; 
+            return result;
         };
         
+        auto select(const std::string& orderBy) -> std::vector<std::vector<std::string>> {
+            std::vector<std::vector<std::string>> result;
+            result = rows;
+
+            const auto& it = std::find(keys.begin(), keys.end(), orderBy);
+            int index = 0;
+
+            if(it != keys.end()) {
+                index = std::distance(keys.begin(), it);
+            }
+
+            auto comp = [index](std::vector<std::string> first, std::vector<std::string> second) { return first.at(index) < second.at(index);};
+
+            std::sort(result.begin(), result.end(), comp);
+
+            return result;
+        }
+
         auto select(const Query& query) -> std::vector<std::vector<std::string>> { 
             std::vector<std::vector<std::string>> result;
 
@@ -46,18 +66,17 @@ class Table {
             return result;
         };
 
-        /*auto populate(const std::string& filename, std::function<auto(std::vector<std::string>) -> T> builderFunction) -> void {
+        auto populate(const std::string& filename) -> void {
             std::ifstream ifs;
             ifs.open(filename, std::ios_base::in);
 
             while(!ifs.eof()) {
                 std::vector<std::string> items = tsv::Reader::readRow(ifs);
                 if(!items.empty()) {
-                    T construct = builderFunction(items);
-                    this->insert(construct);
+                    this->insert(items);
                 }
             }
-        }*/
+        }
 };
 
 } // namespace tsv

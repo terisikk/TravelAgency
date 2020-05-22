@@ -5,26 +5,18 @@ TravelQueryState::TravelQueryState(tsv::Table* table) {
 }
 
 auto TravelQueryState::getOutput() -> std::string {
-    return "Enter customer name or ID: ";
+    return "Enter customer ID: ";
 }
 
 auto TravelQueryState::getOutput(const std::string& input) -> std::string {
     if(table != nullptr) {
-        int queryID = -1;
-
-        try {
-            queryID = std::stoi(input);
-        } catch(...) {
-            queryID = -1;
-        }
-
-        tsv::query::EQ query("CID", queryID);
+        tsv::query::EQ query("CID", input);
 
         std::stringstream output;
-        output << "ID\t\tDriver ID\t\tStart Time\t\tCustomer ID\t\tOrigin\t\tDestination\t\tPayment" << std::endl;
+        output << "ID\tDriver ID\tStart Time\t\tCustomer ID\tOrigin\t\tDestination\t\tPayment" << std::endl;
 
-        for(auto& travel : table->select(query)) {
-            output << TravelMapper::toString(travel);
+        for(auto& data : table->select(query)) {
+            output << TravelMapper::toString(TravelMapper::build(data));
         }
 
         return output.str();

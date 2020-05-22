@@ -24,10 +24,10 @@ auto TravelMapper::toString(const Travel& travel) -> std::string {
 
     output << travel.getID() << "\t"
                     << travel.getDriverID() << "\t\t"
-                    << std::put_time(&time, "%Y.%m.%d %H:%M") << "\t\t"
-                    << travel.getCustomerID() << "\t"
-                    << travel.getOrigin() << "\t\t"
-                    << travel.getDestination() << "\t\t"
+                    << std::put_time(&time, "%Y.%m.%d %H:%M") << "\t"
+                    << travel.getCustomerID() << "\t\t"
+                    << travel.getOrigin() << "\t"
+                    << travel.getDestination() << "\t"
                     << std::put_money(travel.getPayment()) << std::endl;
 
     return output.str();

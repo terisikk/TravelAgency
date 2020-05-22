@@ -87,4 +87,37 @@ SCENARIO( "Table can be created" ) {
             }
         }
     }
+
+    GIVEN( "populated table can be sorted by column" ) {
+        std::vector<std::string> keys = {"ID", "NAME", "DATE"};
+        tsv::Table table(keys);
+
+        std::vector<std::string> names = {"Ahab", "Gandalf", "Bethany", "Babel"};
+        std::vector<std::string> dates = {"2016.11.08 22:00", "2016.09.08 22:00", "2015.01.11 22:00", "2015.01.11 00:11"};
+
+        for(int i = 0; i < names.size(); i++) {
+            std::vector<std::string> data = {std::to_string(i), names.at(i), dates.at(i)}; 
+            table.insert(data); 
+        }
+
+        WHEN( "data is set to be sorted by keys" ) {
+            std::string sortKey1 = "NAME";
+            std::string sortKey2 = "DATE";
+
+            std::string expectedName1 = "Ahab";
+            std::string expectedName2 = "Gandalf";
+            std::string expectedDate1 = "2015.01.11 00:11";
+            std::string expectedDate2 = "2016.11.08 22:00";
+            
+            std::vector<std::vector<std::string>> result1 = table.select(sortKey1);
+            std::vector<std::vector<std::string>> result2 = table.select(sortKey2);
+
+            THEN( "data is sorted correctly" ) {
+                REQUIRE( result1.front()[1] == expectedName1 );
+                REQUIRE( result1.back()[1] == expectedName2 );
+                REQUIRE( result2.front()[2] == expectedDate1 );
+                REQUIRE( result2.back()[2] == expectedDate2 ) ;
+            }
+        }
+    }
 }

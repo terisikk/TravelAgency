@@ -17,16 +17,16 @@ auto main() -> int
         std::cout << "Loading database...";
 
         tsv::Table agencies({"ID", "NAME", "RDATE", "SCOUNT", "CNAME"});
-        agencies.populate("agencies.txt", AgencyMapper::build);
+        agencies.populate("agencies.txt");
 
         tsv::Table customers({"ID", "NAME", "PHONE", "ADDRESS"});
-        customers.populate("customers.txt", CustomerMapper::build);
+        customers.populate("customers.txt");
 
         tsv::Table drivers({"ID", "AID", "NAME", "EDATE", "CAR"});
-        drivers.populate("drivers.txt", DriverMapper::build);
+        drivers.populate("drivers.txt");
 
-        tsv::Table travels({"ID", "STIME", "CID", "ORIGIN", "DESTINATION", "PAYMENT"});
-        travels.populate("travels.txt", TravelMapper::build);
+        tsv::Table travels({"ID", "DID", "STIME", "CID", "ORIGIN", "DESTINATION", "PAYMENT"});
+        travels.populate("travels.txt");
 
         std::cout << " done." << std::endl;
 
