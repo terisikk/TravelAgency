@@ -15,7 +15,7 @@ auto TravelQueryState::getOutput(const std::string& input) -> std::string {
         std::stringstream output;
         output << "ID\tDriver ID\tStart Time\t\tCustomer ID\tOrigin\t\tDestination\t\tPayment" << std::endl;
 
-        for(auto& data : table->select(query)) {
+        for(auto& data : table->select(query, "STIME")) {
             output << TravelMapper::toString(TravelMapper::build(data));
         }
 

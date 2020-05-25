@@ -38,18 +38,7 @@ class Table {
         
         auto select(const std::string& orderBy) -> std::vector<std::vector<std::string>> {
             std::vector<std::vector<std::string>> result;
-            result = rows;
-
-            const auto& it = std::find(keys.begin(), keys.end(), orderBy);
-            int index = 0;
-
-            if(it != keys.end()) {
-                index = std::distance(keys.begin(), it);
-            }
-
-            auto comp = [index](std::vector<std::string> first, std::vector<std::string> second) { return first.at(index) < second.at(index);};
-
-            std::sort(result.begin(), result.end(), comp);
+            result = orderResults(rows, orderBy);
 
             return result;
         }
@@ -65,6 +54,36 @@ class Table {
 
             return result;
         };
+
+        auto select(const Query& query, const std::string& orderBy) -> std::vector<std::vector<std::string>> { 
+            std::vector<std::vector<std::string>> result;
+
+            for (const auto &row : rows) {
+                if (query.execute(row, keys)) {
+                    result.emplace_back(row);
+                }
+            }
+
+            result = orderResults(result, orderBy);
+
+            return result;
+        };
+
+        auto orderResults(const std::vector<std::vector<std::string>>& data, const std::string& orderBy) -> std::vector<std::vector<std::string>> {
+            std::vector<std::vector<std::string>> result = data;
+
+            const auto& it = std::find(keys.begin(), keys.end(), orderBy);
+            int index = 0;
+
+            if(it != keys.end()) {
+                index = std::distance(keys.begin(), it);
+                auto comp = [index](std::vector<std::string> first, std::vector<std::string> second) { return first.at(index) < second.at(index);};
+
+                std::sort(result.begin(), result.end(), comp);
+            }
+
+            return result;
+        }
 
         auto populate(const std::string& filename) -> void {
             std::ifstream ifs;
