@@ -88,7 +88,7 @@ SCENARIO( "Table can be created" ) {
         }
     }
 
-    GIVEN( "populated table can be sorted by column" ) {
+    GIVEN( "populated table" ) {
         std::vector<std::string> keys = {"ID", "NAME", "DATE"};
         tsv::Table table(keys);
 
@@ -119,5 +119,31 @@ SCENARIO( "Table can be created" ) {
                 REQUIRE( result2.back()[2] == expectedDate2 ) ;
             }
         }
+    }
+
+    GIVEN( "populated table" ) {
+        std::vector<std::string> keys = {"ID", "NAME", "AGE"};
+        tsv::Table table(keys);
+        const int ITEM_COUNT = 20;
+
+        for(int i = 0; i < ITEM_COUNT; i++) {
+            std::vector<std::string> data = {std::to_string(i), "Dixus_" + std::to_string(i), std::to_string(i * TEST_AGE)}; 
+            table.insert(data); 
+        }
+
+        WHEN( "data is deleted by ID" ) {
+            std::string expectedName = "Dixus_4";
+
+            tsv::query::EQ query("ID", "4");
+            table.remove(query);
+
+            std::vector<std::vector<std::string>> result1 = table.select();
+            std::vector<std::vector<std::string>> result2 = table.select(query);
+
+            THEN( "only matching rows are selected" ) {
+                REQUIRE( result1.size() == ITEM_COUNT - 1 );
+                REQUIRE( result2.empty() == true );
+            }
+        }        
     }
 }

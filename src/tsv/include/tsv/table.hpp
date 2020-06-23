@@ -41,7 +41,7 @@ class Table {
             result = orderResults(rows, orderBy);
 
             return result;
-        }
+        };
 
         auto select(const Query& query) -> std::vector<std::vector<std::string>> { 
             std::vector<std::vector<std::string>> result;
@@ -83,7 +83,19 @@ class Table {
             }
 
             return result;
-        }
+        };
+
+        auto remove(const Query& query) -> void {
+            std::vector<std::string> keys = this->keys;
+
+            rows.erase(
+                std::remove_if(
+                    rows.begin(), 
+                    rows.end(), 
+                    [&query, &keys](const std::vector<std::string>& row) { return query.execute(row, keys); }
+                ),
+                rows.end());
+        };
 
         auto populate(const std::string& filename) -> void {
             std::ifstream ifs;
@@ -95,7 +107,7 @@ class Table {
                     this->insert(items);
                 }
             }
-        }
+        };
 };
 
 } // namespace tsv

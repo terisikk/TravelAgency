@@ -19,8 +19,6 @@ auto InsertTravelState::getOutput(const std::string& input) -> std::string {
 
     std::vector<std::string> data = {input};
 
-    //std::cin.imbue(std::locale("en_US.UTF-8"));
-
     for(auto& prompt : prompts) {
         std::string input;
         

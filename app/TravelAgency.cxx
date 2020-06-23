@@ -8,6 +8,7 @@
 #include "TravelAgencyConfig.h"
 #include "agency_query_state.hpp"
 #include "customer_query_state.hpp"
+#include "delete_travel_state.hpp"
 #include "driver_for_customer_query_state.hpp"
 #include "driver_query_state.hpp"
 #include "insert_travel_state.hpp"
@@ -38,8 +39,9 @@ auto main() -> int
         //CustomerQueryState customerQueryState(&customers);
         //TravelForCustomerQueryState travelQueryState(&travels);
         //DriverForCustomerQueryState driverForCustomerQueryState(&drivers, &travels);
-        InsertTravelState insertTravelState(&travels);
-        ui::Context uiContext(&insertTravelState);
+        //InsertTravelState insertTravelState(&travels);
+        DeleteTravelState deleteTravelState(&travels);
+        ui::Context uiContext(&deleteTravelState);
 
         while(true) {
             std::cout << uiContext.getOutput();
