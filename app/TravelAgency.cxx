@@ -13,6 +13,7 @@
 #include "driver_query_state.hpp"
 #include "insert_travel_state.hpp"
 #include "travel_for_customer_query_state.hpp"
+#include "travel_query_state.hpp"
 
 
 auto main() -> int
@@ -37,11 +38,12 @@ auto main() -> int
         //AgencyQueryState agencyQueryState(&agencies);
         //DriverQueryState driverQueryState(&drivers);
         //CustomerQueryState customerQueryState(&customers);
-        //TravelForCustomerQueryState travelQueryState(&travels);
+        TravelQueryState travelQueryState(&travels);
+        //TravelForCustomerQueryState travelForCustomerQueryState(&travels);
         //DriverForCustomerQueryState driverForCustomerQueryState(&drivers, &travels);
         //InsertTravelState insertTravelState(&travels);
-        DeleteTravelState deleteTravelState(&travels);
-        ui::Context uiContext(&deleteTravelState);
+        //DeleteTravelState deleteTravelState(&travels);
+        ui::Context uiContext(&travelQueryState);
 
         while(true) {
             std::cout << uiContext.getOutput();
