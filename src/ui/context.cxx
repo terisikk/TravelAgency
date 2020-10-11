@@ -9,6 +9,7 @@ Context::Context(State* state) {
 }
 
 auto Context::transition(State* state) -> void {
+    state->setContext(this);
     this->state = state;
 }
 

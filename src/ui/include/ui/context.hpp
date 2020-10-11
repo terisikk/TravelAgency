@@ -23,4 +23,3 @@ class Context {
 } // namespace ui
 
 #endif
- 

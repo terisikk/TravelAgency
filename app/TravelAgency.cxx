@@ -12,6 +12,7 @@
 #include "driver_for_customer_query_state.hpp"
 #include "driver_query_state.hpp"
 #include "insert_travel_state.hpp"
+#include "select_operation_state.hpp"
 #include "travel_for_customer_query_state.hpp"
 #include "travel_query_state.hpp"
 
@@ -35,15 +36,26 @@ auto main() -> int
 
         std::cout << " done." << std::endl;
 
-        //AgencyQueryState agencyQueryState(&agencies);
-        //DriverQueryState driverQueryState(&drivers);
-        //CustomerQueryState customerQueryState(&customers);
+        AgencyQueryState agencyQueryState(&agencies);
+        DriverQueryState driverQueryState(&drivers);
+        CustomerQueryState customerQueryState(&customers);
         TravelQueryState travelQueryState(&travels);
-        //TravelForCustomerQueryState travelForCustomerQueryState(&travels);
-        //DriverForCustomerQueryState driverForCustomerQueryState(&drivers, &travels);
-        //InsertTravelState insertTravelState(&travels);
-        //DeleteTravelState deleteTravelState(&travels);
-        ui::Context uiContext(&travelQueryState);
+        TravelForCustomerQueryState travelForCustomerQueryState(&travels);
+        DriverForCustomerQueryState driverForCustomerQueryState(&drivers, &travels);
+        InsertTravelState insertTravelState(&travels);
+        DeleteTravelState deleteTravelState(&travels);
+
+        SelectOperationState selectOperationState;
+        selectOperationState.addOperationState("Find an agency", &agencyQueryState);
+        selectOperationState.addOperationState("Find a driver", &driverQueryState);
+        selectOperationState.addOperationState("Find a customer", &customerQueryState);
+        selectOperationState.addOperationState("Insert a new travel", &insertTravelState);
+        selectOperationState.addOperationState("Delete a travel", &deleteTravelState);
+        selectOperationState.addOperationState("Find a travel", &travelQueryState);
+        selectOperationState.addOperationState("Find customer travels", &travelForCustomerQueryState);
+        selectOperationState.addOperationState("Find customer drivers", &driverForCustomerQueryState);
+
+        ui::Context uiContext(&selectOperationState);
 
         while(true) {
             std::cout << uiContext.getOutput();
