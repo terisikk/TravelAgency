@@ -7,6 +7,7 @@
 
 #include "TravelAgencyConfig.h"
 #include "agency_query_state.hpp"
+#include "appcontext.hpp"
 #include "customer_query_state.hpp"
 #include "delete_travel_state.hpp"
 #include "driver_for_customer_query_state.hpp"
@@ -55,7 +56,7 @@ auto main() -> int
         selectOperationState.addOperationState("Find customer travels", &travelForCustomerQueryState);
         selectOperationState.addOperationState("Find customer drivers", &driverForCustomerQueryState);
 
-        ui::Context uiContext(&selectOperationState);
+        AppContext uiContext(&selectOperationState);
 
         while(true) {
             std::cout << uiContext.getOutput();
@@ -63,8 +64,12 @@ auto main() -> int
             std::string input;
             std::getline(std::cin, input);
 
-            std::cout << uiContext.getOutput(input);
+            std::string queryResult = uiContext.getOutput(input);
+            std::cout << queryResult;
 
+            if (!queryResult.empty()) {
+                uiContext.tranisitionToDefaultState();
+            }
         }
 
     } catch (...) {
