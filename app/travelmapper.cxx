@@ -10,9 +10,7 @@ auto TravelMapper::build(std::vector<std::string> data) -> Travel {
     std::tm startTime = {};
     dateStream >> std::get_time(&startTime, "%Y.%m.%d %H:%M");
 
-    std::stringstream moneyStream(data.at(6)); // NOLINT
-    long double payment = 0.00;
-    moneyStream >> std::get_money(payment);
+    long double payment = std::stod(data.at(6)); // NOLINT
 
     return Travel(ID, driverID, startTime, customerID, data.at(4), data.at(5), payment); // NOLINT
 }
@@ -27,8 +25,8 @@ auto TravelMapper::toString(const Travel& travel) -> std::string {
                     << std::put_time(&time, "%Y.%m.%d %H:%M") << "\t"
                     << travel.getCustomerID() << "\t\t"
                     << travel.getOrigin() << "\t"
-                    << travel.getDestination() << "\t"
-                    << std::put_money(travel.getPayment()) << std::endl;
+                    << travel.getDestination() << "\t\t"
+                    << travel.getPayment() << std::endl;
 
     return output.str();
 }
