@@ -66,7 +66,8 @@ auto main() -> int
             std::getline(std::cin, input);
 
             std::string queryResult = uiContext.getOutput(input);
-            std::cout << queryResult;
+            
+            std::cout << std::endl << queryResult << std::endl;
 
             if (!queryResult.empty()) {
                 uiContext.tranisitionToDefaultState();

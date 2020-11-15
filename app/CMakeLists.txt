@@ -3,6 +3,9 @@ file(GLOB CXX_LIST CONFIGURE_DEPENDS "*.cxx")
 
 add_executable(TravelAgency ${HEADER_LIST} ${CXX_LIST})
 
+file(GLOB RESOURCES "resources/big/*.txt")
+file(COPY ${RESOURCES} DESTINATION .)
+
 target_link_libraries(TravelAgency PRIVATE tsv_library)
 target_link_libraries(TravelAgency PRIVATE ui_library)
 target_include_directories(TravelAgency PRIVATE "${PROJECT_BINARY_DIR}/include")
