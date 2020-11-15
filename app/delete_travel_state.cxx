@@ -9,12 +9,16 @@ auto DeleteTravelState::getOutput() -> std::string {
 }
 
 auto DeleteTravelState::getOutput(const std::string& input) -> std::string {
+    return executeQuery(input);
+}
+
+auto DeleteTravelState::executeQuery(const std::string& input) -> std::string {
     tsv::query::EQ idQuery("ID", input);
 
     if(table != nullptr) {
         table->remove(idQuery);
         return "Travels removed succesfully.\n";
     }
-
+    
     return "";
 }

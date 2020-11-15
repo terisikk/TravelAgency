@@ -9,18 +9,22 @@ auto TravelForCustomerQueryState::getOutput() -> std::string {
 }
 
 auto TravelForCustomerQueryState::getOutput(const std::string& input) -> std::string {
-    if(table != nullptr) {
-        tsv::query::EQ query("CID", input);
+    std::stringstream output;
+    output << "ID\tDriver ID\tStart Time\t\tCustomer ID\tOrigin\t\tDestination\t\tPayment" << std::endl;
 
-        std::stringstream output;
-        output << "ID\tDriver ID\tStart Time\t\tCustomer ID\tOrigin\t\tDestination\t\tPayment" << std::endl;
-
-        for(auto& data : table->select(query, "STIME")) {
-            output << TravelMapper::toString(TravelMapper::build(data));
-        }
-
-        return output.str();
+    for(auto& data : executeQuery(input)) {
+        output << TravelMapper::toString(TravelMapper::build(data));
     }
 
-    return "";
+    return output.str();
+}
+
+auto TravelForCustomerQueryState::executeQuery(const std::string& input) -> std::vector<std::vector<std::string>> {
+    if (table != nullptr) {
+        tsv::query::EQ query("CID", input);
+
+        return table->select(query, "STIME");
+    } 
+    
+    return {};
 }

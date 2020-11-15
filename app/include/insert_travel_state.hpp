@@ -17,6 +17,8 @@ class InsertTravelState : public ui::State {
 
         auto getOutput() -> std::string override;
         auto getOutput(const std::string& input) -> std::string override;
+
+        auto executeQuery(const std::vector<std::string>& data) -> std::string;
 };
 
 #endif

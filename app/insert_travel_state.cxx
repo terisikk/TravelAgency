@@ -28,16 +28,20 @@ auto InsertTravelState::getOutput(const std::string& input) -> std::string {
         data.emplace_back(input);
     }
 
+    return executeQuery(data);
+}
+
+auto InsertTravelState::executeQuery(const std::vector<std::string>& data) -> std::string {
     try {
         Travel travel = TravelMapper::build(data);
     } catch (...) {
         return "Error validating data!\n";
     }
 
-    if(table != nullptr) {
+    if (table != nullptr) {
         table->insert(data);
         return "Travel inserted!\n";
     }
-
+    
     return "";
 }

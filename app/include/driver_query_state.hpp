@@ -19,6 +19,8 @@ class DriverQueryState : public ui::State {
 
         auto getOutput() -> std::string override;
         auto getOutput(const std::string& input) -> std::string override;
+
+        auto executeQuery(const std::string& input) -> std::vector<std::vector<std::string>>;
 };
 
 #endif

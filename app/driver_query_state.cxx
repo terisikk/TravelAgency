@@ -9,21 +9,25 @@ auto DriverQueryState::getOutput() -> std::string {
 }
 
 auto DriverQueryState::getOutput(const std::string& input) -> std::string {
-    if(table != nullptr) {
+    std::stringstream output;
+    output << "ID\tAgency ID\tName\t\tEmplyoment date\t\tCar model" << std::endl;
+
+    for(auto& data : executeQuery(input)) {
+        output << DriverMapper::toString(DriverMapper::build(data));
+    }
+
+    return output.str();
+}
+
+auto DriverQueryState::executeQuery(const std::string& input) -> std::vector<std::vector<std::string>> {
+    if (table != nullptr) {
         tsv::query::EQ nameQuery("NAME", input);
         tsv::query::EQ idQuery("ID", input);
 
         tsv::query::OR finalQuery(&nameQuery, &idQuery);
 
-        std::stringstream output;
-        output << "ID\tAgency ID\tName\t\tEmplyoment date\t\tCar model" << std::endl;
-
-        for(auto& data : table->select(finalQuery)) {
-            output << DriverMapper::toString(DriverMapper::build(data));
-        }
-
-        return output.str();
-    }
-
-    return "";
+        return table->select(finalQuery);
+    } 
+    
+    return {};
 }

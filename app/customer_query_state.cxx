@@ -9,21 +9,25 @@ auto CustomerQueryState::getOutput() -> std::string {
 }
 
 auto CustomerQueryState::getOutput(const std::string& input) -> std::string {
-    if(table != nullptr) {
+    std::stringstream output;
+    output << "ID\t\tName\t\tPhone\t\t\tAddress" << std::endl;
+
+    for(auto& data : executeQuery(input)) {
+        output << CustomerMapper::toString(CustomerMapper::build(data));
+    }
+
+    return output.str();
+}
+
+auto CustomerQueryState::executeQuery(const std::string& input) -> std::vector<std::vector<std::string>> {
+    if (table != nullptr) {
         tsv::query::EQ nameQuery("NAME", input);
         tsv::query::EQ idQuery("ID", input);
 
         tsv::query::OR finalQuery(&nameQuery, &idQuery);
 
-        std::stringstream output;
-        output << "ID\t\tName\t\tPhone\t\t\tAddress" << std::endl;
-
-        for(auto& data : table->select(finalQuery)) {
-            output << CustomerMapper::toString(CustomerMapper::build(data));
-        }
-
-        return output.str();
-    }
-
-    return "";
+        return table->select(finalQuery);
+    } 
+    
+    return {};
 }

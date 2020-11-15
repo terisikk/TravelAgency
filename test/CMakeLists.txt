@@ -24,7 +24,7 @@ package_add_test(test_tsv tsv_library
 
 package_add_test(test_ui ui_library ui/test_ui.cxx)
 
-add_executable(test_acceptance acceptance/test_agencybuilder.cxx)
-target_link_libraries(test_acceptance PRIVATE Catch2::Catch2 tsv_library app_library)
+add_executable(test_acceptance acceptance/test_acceptance.cxx)
+target_link_libraries(test_acceptance PRIVATE Catch2::Catch2 tsv_library ui_library app_library)
 catch_discover_tests(test_acceptance)
 

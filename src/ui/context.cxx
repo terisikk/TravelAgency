@@ -9,7 +9,10 @@ Context::Context(State* state) {
 }
 
 auto Context::transition(State* state) -> void {
-    state->setContext(this);
+    if (state != nullptr) {
+        state->setContext(this);
+    }
+    
     this->state = state;
 }
 

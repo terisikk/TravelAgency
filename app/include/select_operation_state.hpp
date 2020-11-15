@@ -10,8 +10,8 @@
 
 class SelectOperationState : public ui::State {
     private:
-        std::vector<ui::State*> states;
-        std::vector<std::string> descriptions;
+        std::vector<ui::State*> states = {};
+        std::vector<std::string> descriptions = {};
 
     public:
         explicit SelectOperationState() = default;
